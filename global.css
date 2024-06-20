@@ -34,8 +34,6 @@ i {
 }
 
 .header {
-    padding-bottom: 20px;
-    padding-top: 20px;
     display: flex;
     justify-content: space-evenly;
     width: 100%;
@@ -45,11 +43,12 @@ i {
     border-radius: 15px;
     box-shadow: 0 4px 10px -2px rgba(0, 0, 0, 0.2);
     margin-bottom: 30px;
+    padding: 20px 15px;
 }
 
 .header-name {
     font-weight: bold;
-    text-align: center;
+    text-align: start;
 }
 
 .header-description {
@@ -126,7 +125,7 @@ i {
 }
 
 .hidden_content {
-    margin-left: 60px;
+    /*margin-left: 60px;*/
     /*margin-right: 100px;*/
     display: flex;
     justify-content: center;
@@ -191,15 +190,18 @@ i {
     flex-direction: column;
 }
 
-.tutoring_content {
-    margin-right: 60px;
-
-}
-#under_construction {
-    width: 100%;
+#comic_container {
+    padding-top: 20px;
     height: 100%;
-    justify-content: center;
-    text-align: center;
-    font-size: 30px;
-    font-weight: 800;
+    display: grid;
+    align-content: space-between;
+    justify-items: center;
+}
+
+#meme_title {
+    margin-bottom: 25px;
+}
+
+#img_container {
+    margin-bottom: 5px;
 }
