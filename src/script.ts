@@ -1,9 +1,15 @@
+import Comic from "./api/response/comic-response";
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime'
+
+dayjs.extend(relativeTime)
+
 document.addEventListener("DOMContentLoaded", function() {
-    const togglePersonal = document.getElementById("toggle_personal");
-    const toggleProgramming = document.getElementById("toggle_programming");
-    const toggleMeme = document.getElementById("toggle_meme");
-    const personalContent = document.querySelector(".personal_content");
-    const programmingContent = document.querySelector(".programming_content");
+    const togglePersonal = document.getElementById("toggle_personal") as HTMLElement;
+    const toggleProgramming = document.getElementById("toggle_programming") as HTMLElement;
+    const toggleMeme = document.getElementById("toggle_meme") as HTMLElement;
+    const personalContent = document.querySelector(".personal_content") as HTMLElement;
+    const programmingContent = document.querySelector(".programming_content") as HTMLElement;
 
 
     togglePersonal.addEventListener("click", function() {
@@ -16,7 +22,6 @@ document.addEventListener("DOMContentLoaded", function() {
             toggleMeme.style.textDecoration = "none";
 
         } else {
-            console.log(personalContent.style.display)
             personalContent.style.display = "none";
             togglePersonal.style.textDecoration = "none";
         }
@@ -48,21 +53,19 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 fetchXKCDComic("a.mitiutneva@innopolis.university");
-function fetchXKCDComic(email) {
+function fetchXKCDComic(email: string) {
     const url = new URL('https://fwd.innopolis.university/api/hw2');
     const params = new URLSearchParams({email});
-    url.search = params;
+    url.search = params.toString();
     fetch(url)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error status: ${response.status}`);
             }
-            return response.json();
+            return response.json() as Promise<string>;
         })
         .then(data => {
-            const id = data;
-            console.log('Comic Identifier:', id);
-            handleComicId(id);
+            handleComicId(data);
 
         })
         .catch(error => {
@@ -70,7 +73,7 @@ function fetchXKCDComic(email) {
         });
 }
 
-function handleComicId(id) {
+function handleComicId(id: string) {
     const url = new URL('https://fwd.innopolis.university/api/comic');
     const params = new URLSearchParams({ id });
     url.search = params.toString();
@@ -79,10 +82,9 @@ function handleComicId(id) {
             if (!response.ok) {
                 throw new Error(`HTTP error status: ${response.status}`);
             }
-            return response.json();
+            return response.json() as Promise<Comic>;
         })
         .then(data => {
-            console.log(data);
             displayContent(data)
         })
         .catch(error => {
@@ -90,12 +92,14 @@ function handleComicId(id) {
         })
 }
 
-function displayContent(data) {
-    const title = document.getElementById('meme_title');
-    const img = document.getElementById('img_container');
-    const date = document.getElementById('meme_date');
+function displayContent(data: Comic) {
+    const title = document.getElementById('meme_title') as HTMLElement;
+    const img = document.getElementById('img_container') as HTMLElement;
+    const date = document.getElementById('meme_date') as HTMLElement;
     title.innerHTML = `${data.safe_title}`;
     img.innerHTML = `<img src="${data.img}" alt="${data.alt}">`;
-    date.innerHTML = `Date Uploaded: ${new Date(data.day, data.month, data.year).toLocaleDateString()}`;
+    const comicDate = dayjs(new Date(data.year, data.month-1, data.day));
+    const timeSinceRelease = comicDate.fromNow();
+    date.innerHTML = `Date Uploaded: ${timeSinceRelease}`;
 }
 
