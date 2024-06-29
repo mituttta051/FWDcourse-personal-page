@@ -13,6 +13,6 @@
     "bundle": "webpack"
   },
   "dependencies": {
-    "dayjs": "^1.11.11"
+    "date-fns": "^3.6.0"
   }
 }

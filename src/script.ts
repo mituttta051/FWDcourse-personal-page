@@ -1,8 +1,7 @@
 import Comic from "./api/response/comic-response";
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime'
+import { formatDistanceToNow } from 'date-fns';
 
-dayjs.extend(relativeTime)
+
 
 document.addEventListener("DOMContentLoaded", function() {
     const togglePersonal = document.getElementById("toggle_personal") as HTMLElement;
@@ -98,8 +97,13 @@ function displayContent(data: Comic) {
     const date = document.getElementById('meme_date') as HTMLElement;
     title.innerHTML = `${data.safe_title}`;
     img.innerHTML = `<img src="${data.img}" alt="${data.alt}">`;
-    const comicDate = dayjs(new Date(data.year, data.month-1, data.day));
-    const timeSinceRelease = comicDate.fromNow();
-    date.innerHTML = `Date Uploaded: ${timeSinceRelease}`;
+
+    const comicDate = new Date(data.year, data.month - 1, data.day);
+
+    // Use the formatDistanceToNow function to get a string representing the time since the comic was released
+    const timeSinceRelease = formatDistanceToNow(comicDate);
+
+    date.innerHTML = `Date Uploaded: ${timeSinceRelease} ago`;
+
 }
 
