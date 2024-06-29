@@ -4,7 +4,7 @@ module.exports = {
     mode: 'production',
     entry: './src/script.ts',
     output: {
-        filename: 'bundle.js',
+        filename: 'script.js',
     },
     resolve: {
         extensions: ['.ts', '.js'],
