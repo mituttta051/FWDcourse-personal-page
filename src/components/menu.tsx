@@ -1,27 +1,23 @@
 import '../App.css'
-import {useState} from "react";
+import {usePathname} from "next/navigation";
+import Link from "next/link";
 
 interface MenuProps {
     items: {
         title: string;
-        onClick: () => void;
+        link: string;
     }[]
-
 }
 export default function Menu(props: MenuProps) {
-    const [underline, setUnderline] = useState(0);
+    const pathname = usePathname();
     return (
         <div className="default">
             <div className="menu">
                 <nav className="menu_nav">
-                    {props.items.map((item, index) => {
-                        return <button className={"menu_item " + (underline === index ? "underline" : "")}
-                                onClick={() => {
-                                    item.onClick();
-                                    setUnderline(index);
-                                }
-
-                                }>{item.title}</button>
+                    {props.items.map((item) => {
+                        return <Link className={"menu_item " + (pathname === item.link ? "underline" : "")}
+                                     href={item.link}
+                            >{item.title}</Link>
                     })}
                 </nav>
             </div>
