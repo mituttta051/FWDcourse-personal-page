@@ -1,9 +1,11 @@
 import '../App.css'
+
 interface AboutMeProps {
     title: string;
     paragraphs: React.ReactNode[];
     img: string;
 }
+
 export default function AboutMe(props: AboutMeProps) {
     return (
         <div className="hidden_content personal_content">

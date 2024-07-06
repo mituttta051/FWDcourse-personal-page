@@ -11,6 +11,7 @@ interface HeaderProps {
         id: string;
     }[];
 }
+
 export default function Header(props: HeaderProps) {
     return (
         <div className="default">
