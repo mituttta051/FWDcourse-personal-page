@@ -2,10 +2,14 @@
 
 import Menu from "../components/menu";
 import AboutMe from "../components/about-me";
+import {Helmet} from "react-helmet";
 
 export default function Personal() {
     return (
         <>
+            <Helmet>
+                <meta name="description" content="Author biography"/>
+            </Helmet>
             <Menu items={[
                 {
                     title: "Personal",

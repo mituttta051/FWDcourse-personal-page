@@ -1,59 +1,23 @@
 'use client'
-
+import { Helmet } from 'react-helmet';
 import {formatDistanceToNow} from "date-fns";
 import {useEffect, useState} from "react";
 import Comic from "../../api/response/comic-response";
 import Menu from "../../components/menu";
+import ComicService from "../../api/service/comic-service";
 
 export default function Page() {
     const [comic, setComic] = useState<Comic | null>(null);
-
     useEffect(() => {
-        fetchXKCDComic("a.mitiutneva@innopolis.university");
+        ComicService.getComic("a.mitiutneva@innopolis.university")
+            .then((data) => setComic(data as Comic));
 
     }, [])
-
-    function fetchXKCDComic(email: string) {
-        const url = new URL('https://fwd.innopolis.university/api/hw2');
-        const params = new URLSearchParams({email});
-        url.search = params.toString();
-        fetch(url)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error status: ${response.status}`);
-                }
-                return response.json() as Promise<string>;
-            })
-            .then(data => {
-                handleComicId(data);
-
-            })
-            .catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
-            });
-    }
-
-    function handleComicId(id: string) {
-        const url = new URL('https://fwd.innopolis.university/api/comic');
-        const params = new URLSearchParams({id});
-        url.search = params.toString();
-        fetch(url)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error status: ${response.status}`);
-                }
-                return response.json() as Promise<Comic>;
-            })
-            .then(data => {
-                setComic(data)
-            })
-            .catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
-            })
-    }
-
     return (
         <>
+            <Helmet>
+                <meta name="description" content="popular unique anecdote for physists" />
+            </Helmet>
             <Menu items={[
                 {
                     title: "Personal",
